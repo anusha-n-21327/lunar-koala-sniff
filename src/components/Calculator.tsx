@@ -34,7 +34,7 @@ export const Calculator = () => {
       setDisplay(digit);
       setWaitingForSecondOperand(false);
     } else {
-      if (display.length >= 15) return;
+      if (display.length >= 22) return;
       setDisplay(display === "0" ? digit : display + digit);
     }
   };

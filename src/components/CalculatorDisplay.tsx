@@ -5,23 +5,21 @@ interface CalculatorDisplayProps {
 }
 
 export const CalculatorDisplay = ({ value }: CalculatorDisplayProps) => {
-  // Format the value for better readability
-  const formattedValue = () => {
-    try {
-      const num = parseFloat(value);
-      if (value.length > 15) {
-        return num.toExponential(9);
-      }
-      return value;
-    } catch (error) {
-      return value; // Return as is if not a number (e.g., "Error")
+  const getFontSizeClass = () => {
+    const length = value.length;
+    if (length > 18) {
+      return 'text-3xl';
     }
+    if (length > 13) {
+      return 'text-4xl';
+    }
+    return 'text-5xl';
   };
 
   return (
-    <div className="bg-gray-800 text-white text-right p-4 rounded-t-lg mb-4">
-      <p className="text-5xl font-light break-all h-16 flex items-end justify-end" data-testid="display">
-        {formattedValue()}
+    <div className="bg-gray-800 text-white text-right p-4 rounded-t-lg mb-4 overflow-hidden">
+      <p className={`font-light break-all h-20 flex items-end justify-end ${getFontSizeClass()}`} data-testid="display">
+        {value}
       </p>
     </div>
   );
