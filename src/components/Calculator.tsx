@@ -156,6 +156,8 @@ export const Calculator = () => {
   const scientificButtons = [
     'sin', 'cos', 'tan', 'log', 'ln', '√', 'x²', 'xʸ', 'eˣ', 'π', 'n!',
   ];
+  
+  const operatorClassName = "bg-gray-700 hover:bg-gray-600";
 
   return (
     <div className="w-full max-w-sm md:max-w-lg mx-auto bg-gray-900 rounded-lg shadow-2xl p-4 text-white">
@@ -172,7 +174,7 @@ export const Calculator = () => {
         {mode === 'scientific' && (
           <div className="grid grid-cols-3 gap-2">
             {scientificButtons.map(label => (
-              <CalculatorButton key={label} label={label} onClick={handleButtonClick} variant="outline" />
+              <CalculatorButton key={label} label={label} onClick={handleButtonClick} variant="outline" className={operatorClassName} />
             ))}
           </div>
         )}
@@ -180,22 +182,22 @@ export const Calculator = () => {
             <CalculatorButton label="C" onClick={handleButtonClick} className="bg-red-500 hover:bg-red-600 text-white" />
             <CalculatorButton label="←" onClick={handleButtonClick} />
             <CalculatorButton label="%" onClick={handleButtonClick} />
-            <CalculatorButton label="÷" onClick={handleButtonClick} variant="outline" />
+            <CalculatorButton label="÷" onClick={handleButtonClick} variant="outline" className={operatorClassName} />
             
             <CalculatorButton label="7" onClick={handleButtonClick} />
             <CalculatorButton label="8" onClick={handleButtonClick} />
             <CalculatorButton label="9" onClick={handleButtonClick} />
-            <CalculatorButton label="×" onClick={handleButtonClick} variant="outline" />
+            <CalculatorButton label="×" onClick={handleButtonClick} variant="outline" className={operatorClassName} />
 
             <CalculatorButton label="4" onClick={handleButtonClick} />
             <CalculatorButton label="5" onClick={handleButtonClick} />
             <CalculatorButton label="6" onClick={handleButtonClick} />
-            <CalculatorButton label="−" onClick={handleButtonClick} variant="outline" />
+            <CalculatorButton label="−" onClick={handleButtonClick} variant="outline" className={operatorClassName} />
 
             <CalculatorButton label="1" onClick={handleButtonClick} />
             <CalculatorButton label="2" onClick={handleButtonClick} />
             <CalculatorButton label="3" onClick={handleButtonClick} />
-            <CalculatorButton label="+" onClick={handleButtonClick} variant="outline" />
+            <CalculatorButton label="+" onClick={handleButtonClick} variant="outline" className={operatorClassName} />
 
             <CalculatorButton label="0" onClick={handleButtonClick} className="col-span-2" />
             <CalculatorButton label="." onClick={handleButtonClick} />
