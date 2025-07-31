@@ -5,6 +5,23 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { showError } from '@/utils/toast';
 
+const factorial = (n: number): number => {
+  if (n < 0 || !Number.isInteger(n)) {
+    return NaN;
+  }
+  if (n > 170) {
+    return Infinity;
+  }
+  if (n === 0 || n === 1) {
+    return 1;
+  }
+  let result = 1;
+  for (let i = 2; i <= n; i++) {
+    result *= i;
+  }
+  return result;
+};
+
 export const Calculator = () => {
   const [display, setDisplay] = useState("0");
   const [firstOperand, setFirstOperand] = useState<number | null>(null);
@@ -57,6 +74,18 @@ export const Calculator = () => {
         }
         return operand1 / operand2;
       case 'xʸ': return Math.pow(operand1, operand2);
+      case 'nPr':
+        if (!Number.isInteger(operand1) || !Number.isInteger(operand2) || operand1 < 0 || operand2 < 0 || operand1 < operand2) {
+            showError("Invalid input for nPr (n≥r≥0)");
+            return NaN;
+        }
+        return factorial(operand1) / factorial(operand1 - operand2);
+      case 'nCr':
+        if (!Number.isInteger(operand1) || !Number.isInteger(operand2) || operand1 < 0 || operand2 < 0 || operand1 < operand2) {
+            showError("Invalid input for nCr (n≥r≥0)");
+            return NaN;
+        }
+        return factorial(operand1) / (factorial(operand1 - operand2) * factorial(operand2));
       default: return operand2;
     }
   };
@@ -116,17 +145,21 @@ export const Calculator = () => {
         if (value < 0 || !Number.isInteger(value)) {
           result = NaN;
           showError("Input must be a non-negative integer.");
-        } else if (value > 170) {
-            result = Infinity;
         } else {
-            let fact = 1;
-            for (let i = 2; i <= value; i++) {
-              fact *= i;
-            }
-            result = fact;
+            result = factorial(value);
         }
         break;
       case '%': result = value / 100; break;
+      case '1/x':
+        if (value === 0) {
+          showError("Cannot divide by zero");
+          result = NaN;
+        } else {
+          result = 1 / value;
+        }
+        break;
+      case 'abs': result = Math.abs(value); break;
+      case 'rand': result = Math.random(); break;
       default: return;
     }
 
@@ -149,18 +182,21 @@ export const Calculator = () => {
     else if (label === 'C') clearAll();
     else if (label === '←') backspace();
     else if (label === '=') handleEquals();
-    else if (['+', '−', '×', '÷', 'xʸ'].includes(label)) performOperation(label);
+    else if (['+', '−', '×', '÷', 'xʸ', 'nPr', 'nCr'].includes(label)) performOperation(label);
     else handleScientific(label);
   };
 
   const scientificButtons = [
-    'sin', 'cos', 'tan', 'log', 'ln', '√', 'x²', 'xʸ', 'eˣ', 'π', 'n!',
+    'sin', 'cos', 'tan', 'log',
+    'ln', '√', 'x²', 'xʸ',
+    'eˣ', 'π', 'n!', '1/x',
+    'nPr', 'nCr', 'abs', 'rand'
   ];
   
   const operatorClassName = "bg-gray-700 hover:bg-gray-600";
 
   return (
-    <div className="w-full max-w-sm md:max-w-lg mx-auto bg-gray-900 rounded-lg shadow-2xl p-4 text-white">
+    <div className="w-full max-w-lg mx-auto bg-gray-900 rounded-lg shadow-2xl p-4 text-white">
       <CalculatorDisplay value={display} />
       <div className="flex items-center space-x-2 my-4">
         <Switch
@@ -172,7 +208,7 @@ export const Calculator = () => {
       </div>
       <div className="flex gap-2">
         {mode === 'scientific' && (
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-4 gap-2">
             {scientificButtons.map(label => (
               <CalculatorButton key={label} label={label} onClick={handleButtonClick} variant="outline" className={operatorClassName} />
             ))}
