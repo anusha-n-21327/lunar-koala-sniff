@@ -196,7 +196,7 @@ export const Calculator = () => {
   const operatorClassName = "bg-gray-700 hover:bg-gray-600";
 
   return (
-    <div className="w-full max-w-lg mx-auto bg-gray-900 rounded-lg shadow-2xl p-4 text-white">
+    <div className="w-full max-w-2xl mx-auto bg-gray-900 rounded-lg shadow-2xl p-4 text-white">
       <CalculatorDisplay value={display} />
       <div className="flex items-center space-x-2 my-4">
         <Switch
