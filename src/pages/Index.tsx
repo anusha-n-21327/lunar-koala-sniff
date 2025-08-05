@@ -1,5 +1,4 @@
 import { Calculator } from "@/components/Calculator";
-import { MadeWithDyad } from "@/components/made-with-dyad";
 
 const Index = () => {
   return (
@@ -7,9 +6,6 @@ const Index = () => {
       <div className="w-full max-w-2xl">
         <h1 className="text-4xl font-bold mb-6 text-white text-center">Calculator</h1>
         <Calculator />
-      </div>
-      <div className="absolute bottom-4">
-        <MadeWithDyad />
       </div>
     </div>
   );
